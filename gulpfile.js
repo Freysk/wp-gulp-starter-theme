@@ -1,31 +1,30 @@
 /* ---------------------------------------- */
 /*           Nom de mon thème               */
 /* ---------------------------------------- */
-const urlTrailingPath = "sem-intergen";
+const urlTrailingPath = "wp-gulp-starter-theme";
 
 /* ---------------------------------------- */
 /* Déclaration des variables pour les tasks */
 /* ---------------------------------------- */
+// GENERAL Plugins
 const gulp = require('gulp');
-
 const pump = require('pump');
 const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
-
+// SASS Plugins
 const sass = require('gulp-sass');
 const cleanCSS = require('gulp-clean-css');
-
+// JS Plugins
 const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
-// const concat = require('gulp-concat');
 
 /* --------------------- */
 /* Déclaration des tasks */
 /* --------------------- */
 
-// Sass to css, minification, renaming, copy to destination
+// Sass to css, autoprefixing, minification, renaming, copy to destination
 gulp.task('sass', (cb) => {
   pump([
     gulp.src('./src/sass/**/*.{sass,scss}')
@@ -45,7 +44,7 @@ gulp.task('sass', (cb) => {
   ], cb);
 });
 
-// JS Minification, renaming, copy to destination
+// JS Babelization, Minification, renaming, copy to destination
 gulp.task('js', (cb) => {
   pump([
     gulp.src('src/js/**/*.js')
@@ -73,7 +72,7 @@ gulp.task('refresh', function () {
   });
 });
 
-gulp.task('watch', ['sass', 'js', 'refresh'], () => {
+gulp.task('watch', ['sass', 'js'], () => {
   gulp.watch('src/scss/**/*.{sass,scss}', ['sass']);
   gulp.watch('src/js/**/*.js', ['js']);
   gulp.watch('./*.php').on('change', browserSync.reload);
@@ -81,4 +80,4 @@ gulp.task('watch', ['sass', 'js', 'refresh'], () => {
   gulp.watch('./assets/js/*.js').on('change', browserSync.reload);
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'refresh']);
