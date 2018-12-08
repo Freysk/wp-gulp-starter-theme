@@ -1,10 +1,11 @@
 /* ---------------------------------------- */
-/*           Nom de mon thème               */
+/*           Stuff to adapt                 */
 /* ---------------------------------------- */
-const urlTrailingPath = "gulp-wp-starter-theme";
+const urlTrailingPath = "wp-gulp-starter";
 const localServerPort = "8888";
+
 /* ---------------------------------------- */
-/* Déclaration des variables pour les tasks */
+/*              Variables                   */
 /* ---------------------------------------- */
 // GENERAL Plugins
 const gulp = require('gulp');
@@ -20,10 +21,9 @@ const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 
-/* --------------------- */
-/* Déclaration des tasks */
-/* --------------------- */
-
+/* ---------------------------------------- */
+/*         Déclaration des tasks            */
+/* ---------------------------------------- */
 // Sass to css, autoprefixing, minification, renaming, copy to destination
 gulp.task('sass', (cb) => {
   pump([
@@ -59,6 +59,7 @@ gulp.task('js', (cb) => {
   ], cb);
 });
 
+// Refresh
 gulp.task('refresh', function () {
   var files = [
     './*.php',
@@ -67,12 +68,14 @@ gulp.task('refresh', function () {
     './assets/img/*.{png,jpg,gif,svg}'
   ];
   browserSync.init(files, {
-
     proxy: `localhost:${localServerPort}/${urlTrailingPath}`,
     injectChanges: true
   });
 });
 
+/* ---------------------------------------- */
+/*              Watch task                  */
+/* ---------------------------------------- */
 gulp.task('watch', ['sass', 'js'], () => {
   gulp.watch('src/scss/**/*.{sass,scss}', ['sass']);
   gulp.watch('src/js/**/*.js', ['js']);
@@ -81,4 +84,7 @@ gulp.task('watch', ['sass', 'js'], () => {
   gulp.watch('./assets/js/*.js').on('change', browserSync.reload);
 });
 
+/* ---------------------------------------- */
+/*              Default task                */
+/* ---------------------------------------- */
 gulp.task('default', ['watch', 'refresh']);
