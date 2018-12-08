@@ -1,8 +1,8 @@
 /* ---------------------------------------- */
 /*           Nom de mon thème               */
 /* ---------------------------------------- */
-const urlTrailingPath = "wp-gulp-starter-theme";
-
+const urlTrailingPath = "gulp-wp-starter-theme";
+const localServerPort = "8888";
 /* ---------------------------------------- */
 /* Déclaration des variables pour les tasks */
 /* ---------------------------------------- */
@@ -67,7 +67,8 @@ gulp.task('refresh', function () {
     './assets/img/*.{png,jpg,gif,svg}'
   ];
   browserSync.init(files, {
-    proxy: "localhost:8888/" + urlTrailingPath,
+
+    proxy: `localhost:${localServerPort}/${urlTrailingPath}`,
     injectChanges: true
   });
 });
